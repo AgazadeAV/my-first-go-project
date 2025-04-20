@@ -9,34 +9,7 @@
     "host": "localhost:8080",
     "basePath": "/",
     "paths": {
-        "/users": {
-            "get": {
-                "description": "Retrieve all users from the database",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "users"
-                ],
-                "summary": "Get all users",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/ent.User"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/internal_user.ErrorResponse"
-                        }
-                    }
-                }
-            },
+        "/users/create-user": {
             "post": {
                 "description": "Add a new user to the system",
                 "consumes": [
@@ -56,7 +29,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/internal_user.CreateUserInput"
+                            "$ref": "#/definitions/github_com_AgazadeAV_my-first-go-project_internal_app_user_model.CreateUserInput"
                         }
                     }
                 ],
@@ -64,25 +37,25 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ent.User"
+                            "$ref": "#/definitions/github_com_AgazadeAV_my-first-go-project_internal_app_user_model.UserResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/internal_user.ErrorResponse"
+                            "$ref": "#/definitions/github_com_AgazadeAV_my-first-go-project_internal_app_user_errs.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/internal_user.ErrorResponse"
+                            "$ref": "#/definitions/github_com_AgazadeAV_my-first-go-project_internal_app_user_errs.ErrorResponse"
                         }
                     }
                 }
             }
         },
-        "/users/{id}": {
+        "/users/delete-user/{id}": {
             "delete": {
                 "description": "Delete a user by UUID",
                 "produces": [
@@ -105,22 +78,48 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/github_com_AgazadeAV_my-first-go-project_internal_app_user_model.SuccessResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/internal_user.ErrorResponse"
+                            "$ref": "#/definitions/github_com_AgazadeAV_my-first-go-project_internal_app_user_errs.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/internal_user.ErrorResponse"
+                            "$ref": "#/definitions/github_com_AgazadeAV_my-first-go-project_internal_app_user_errs.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/get-all-users": {
+            "get": {
+                "description": "Retrieve all users from the database",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get all users",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_AgazadeAV_my-first-go-project_internal_app_user_model.UserResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_AgazadeAV_my-first-go-project_internal_app_user_errs.ErrorResponse"
                         }
                     }
                 }
@@ -128,42 +127,105 @@
         }
     },
     "definitions": {
-        "ent.User": {
+        "github_com_AgazadeAV_my-first-go-project_internal_app_user_errs.ErrorResponse": {
             "type": "object",
             "properties": {
-                "age": {
-                    "description": "Age holds the value of the \"age\" field.",
-                    "type": "integer"
+                "errors": {
+                    "description": "Detailed field-specific validation errors\nswagger:type object",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "example": {
+                        "email": "Email is required",
+                        "first_name": "Invalid format"
+                    }
                 },
-                "id": {
-                    "description": "ID of the ent.",
-                    "type": "string"
+                "message": {
+                    "description": "A descriptive message explaining the error",
+                    "type": "string",
+                    "example": "Validation failed"
                 },
-                "name": {
-                    "description": "Name holds the value of the \"name\" field.",
-                    "type": "string"
+                "status": {
+                    "description": "The HTTP status (as string)",
+                    "type": "string",
+                    "example": "400 Bad Request"
+                },
+                "timestamp": {
+                    "description": "The time at which the error occurred",
+                    "type": "string",
+                    "example": "2025-04-20T01:23:45Z"
                 }
             }
         },
-        "internal_user.CreateUserInput": {
+        "github_com_AgazadeAV_my-first-go-project_internal_app_user_model.CreateUserInput": {
             "type": "object",
             "properties": {
-                "age": {
-                    "type": "integer",
-                    "example": 30
+                "birth_date": {
+                    "description": "Birthdate in format YYYY-MM-DD.",
+                    "type": "string",
+                    "example": "1995-05-03"
                 },
-                "name": {
+                "email": {
+                    "description": "Email address in valid format.",
+                    "type": "string",
+                    "example": "azer.agazade05@yandex.ru"
+                },
+                "first_name": {
+                    "description": "First name of the user. Must be Latin, 1-50 characters.",
                     "type": "string",
                     "example": "Azer"
+                },
+                "last_name": {
+                    "description": "Last name of the user. Must be Latin, 1-50 characters.",
+                    "type": "string",
+                    "example": "Agazade"
+                },
+                "phone_number": {
+                    "description": "Phone number starting with +7 and 10 digits.",
+                    "type": "string",
+                    "example": "+79672417678"
+                },
+                "username": {
+                    "description": "Unique username (Latin letters, numbers, dash or underscore).",
+                    "type": "string",
+                    "example": "azer_agazade"
                 }
             }
         },
-        "internal_user.ErrorResponse": {
+        "github_com_AgazadeAV_my-first-go-project_internal_app_user_model.SuccessResponse": {
             "type": "object",
             "properties": {
                 "message": {
+                    "description": "A success message",
                     "type": "string",
-                    "example": "Internal server error"
+                    "example": "Operation successful"
+                }
+            }
+        },
+        "github_com_AgazadeAV_my-first-go-project_internal_app_user_model.UserResponse": {
+            "type": "object",
+            "properties": {
+                "birth_date": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "phone_number": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
                 }
             }
         }

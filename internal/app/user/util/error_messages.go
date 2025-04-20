@@ -1,0 +1,28 @@
+package util
+
+const (
+	ErrFirstNameRequired     = "First name is required."
+	ErrFirstNameEmpty        = "First name cannot be empty."
+	ErrFirstNameInvalid      = "First name error. Please use Latin letters only. Hyphen can only be in the middle, apostrophe can be in the middle or at the end."
+	ErrLastNameRequired      = "Last name is required"
+	ErrLastNameEmpty         = "Last name cannot be empty"
+	ErrLastNameInvalid       = "Last name error. Please use Latin letters only. Hyphen can only be in the middle, apostrophe can be in the middle or at the end"
+	ErrUsernameRequired      = "Username is required"
+	ErrUsernameEmpty         = "Username cannot be empty"
+	ErrUsernameInvalid       = "Username must contain only letters, digits, '-' and '_'"
+	ErrEmailRequired         = "Email is required"
+	ErrEmailEmpty            = "Email cannot be empty"
+	ErrEmailInvalid          = "Improper email format. Please use the following format: example@domain.com (.net, .org, etc.). Only Latin letters, numbers, dashes “-”, dots “.”, and underscores “_” are allowed"
+	ErrPhoneRequired         = "Phone number is required"
+	ErrPhoneEmpty            = "Phone number cannot be empty"
+	ErrPhoneInvalid          = "Phone must start with +7 and contain exactly 10 digits after"
+	ErrBirthDateRequired     = "Birth date is required"
+	ErrBirthDateEmpty        = "Birth date cannot be empty"
+	ErrBirthDateInvalid      = "Invalid date format. Expected YYYY-MM-DD"
+	ErrBirthDateInFuture     = "Birth date cannot be in the future"
+	ErrBirthDateTooEarly     = "Birth date must be after 1900-01-01"
+	ErrBirthDateTooYoung     = "User must be at least 18 years old"
+	ErrEmailAlreadyExists    = "Email already in use"
+	ErrUsernameAlreadyExists = "Username already taken"
+	ErrPhoneAlreadyExists    = "Phone number already in use"
+)

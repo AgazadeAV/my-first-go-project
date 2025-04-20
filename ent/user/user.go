@@ -12,10 +12,18 @@ const (
 	Label = "user"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldName holds the string denoting the name field in the database.
-	FieldName = "name"
-	// FieldAge holds the string denoting the age field in the database.
-	FieldAge = "age"
+	// FieldFirstName holds the string denoting the first_name field in the database.
+	FieldFirstName = "first_name"
+	// FieldLastName holds the string denoting the last_name field in the database.
+	FieldLastName = "last_name"
+	// FieldUsername holds the string denoting the username field in the database.
+	FieldUsername = "username"
+	// FieldEmail holds the string denoting the email field in the database.
+	FieldEmail = "email"
+	// FieldPhoneNumber holds the string denoting the phone_number field in the database.
+	FieldPhoneNumber = "phone_number"
+	// FieldBirthDate holds the string denoting the birth_date field in the database.
+	FieldBirthDate = "birth_date"
 	// Table holds the table name of the user in the database.
 	Table = "users"
 )
@@ -23,8 +31,12 @@ const (
 // Columns holds all SQL columns for user fields.
 var Columns = []string{
 	FieldID,
-	FieldName,
-	FieldAge,
+	FieldFirstName,
+	FieldLastName,
+	FieldUsername,
+	FieldEmail,
+	FieldPhoneNumber,
+	FieldBirthDate,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -38,10 +50,16 @@ func ValidColumn(column string) bool {
 }
 
 var (
-	// NameValidator is a validator for the "name" field. It is called by the builders before save.
-	NameValidator func(string) error
-	// AgeValidator is a validator for the "age" field. It is called by the builders before save.
-	AgeValidator func(int) error
+	// FirstNameValidator is a validator for the "first_name" field. It is called by the builders before save.
+	FirstNameValidator func(string) error
+	// LastNameValidator is a validator for the "last_name" field. It is called by the builders before save.
+	LastNameValidator func(string) error
+	// UsernameValidator is a validator for the "username" field. It is called by the builders before save.
+	UsernameValidator func(string) error
+	// EmailValidator is a validator for the "email" field. It is called by the builders before save.
+	EmailValidator func(string) error
+	// PhoneNumberValidator is a validator for the "phone_number" field. It is called by the builders before save.
+	PhoneNumberValidator func(string) error
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() uuid.UUID
 )
@@ -54,12 +72,32 @@ func ByID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldID, opts...).ToFunc()
 }
 
-// ByName orders the results by the name field.
-func ByName(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldName, opts...).ToFunc()
+// ByFirstName orders the results by the first_name field.
+func ByFirstName(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldFirstName, opts...).ToFunc()
 }
 
-// ByAge orders the results by the age field.
-func ByAge(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldAge, opts...).ToFunc()
+// ByLastName orders the results by the last_name field.
+func ByLastName(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldLastName, opts...).ToFunc()
+}
+
+// ByUsername orders the results by the username field.
+func ByUsername(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldUsername, opts...).ToFunc()
+}
+
+// ByEmail orders the results by the email field.
+func ByEmail(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldEmail, opts...).ToFunc()
+}
+
+// ByPhoneNumber orders the results by the phone_number field.
+func ByPhoneNumber(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldPhoneNumber, opts...).ToFunc()
+}
+
+// ByBirthDate orders the results by the birth_date field.
+func ByBirthDate(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldBirthDate, opts...).ToFunc()
 }

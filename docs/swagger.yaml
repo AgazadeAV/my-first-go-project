@@ -1,30 +1,79 @@
 basePath: /
 definitions:
-  ent.User:
+  github_com_AgazadeAV_my-first-go-project_internal_app_user_errs.ErrorResponse:
     properties:
-      age:
-        description: Age holds the value of the "age" field.
-        type: integer
-      id:
-        description: ID of the ent.
+      errors:
+        additionalProperties:
+          type: string
+        description: |-
+          Detailed field-specific validation errors
+          swagger:type object
+        example:
+          email: Email is required
+          first_name: Invalid format
+        type: object
+      message:
+        description: A descriptive message explaining the error
+        example: Validation failed
         type: string
-      name:
-        description: Name holds the value of the "name" field.
+      status:
+        description: The HTTP status (as string)
+        example: 400 Bad Request
+        type: string
+      timestamp:
+        description: The time at which the error occurred
+        example: "2025-04-20T01:23:45Z"
         type: string
     type: object
-  internal_user.CreateUserInput:
+  github_com_AgazadeAV_my-first-go-project_internal_app_user_model.CreateUserInput:
     properties:
-      age:
-        example: 30
-        type: integer
-      name:
+      birth_date:
+        description: Birthdate in format YYYY-MM-DD.
+        example: "1995-05-03"
+        type: string
+      email:
+        description: Email address in valid format.
+        example: azer.agazade05@yandex.ru
+        type: string
+      first_name:
+        description: First name of the user. Must be Latin, 1-50 characters.
         example: Azer
         type: string
+      last_name:
+        description: Last name of the user. Must be Latin, 1-50 characters.
+        example: Agazade
+        type: string
+      phone_number:
+        description: Phone number starting with +7 and 10 digits.
+        example: "+79672417678"
+        type: string
+      username:
+        description: Unique username (Latin letters, numbers, dash or underscore).
+        example: azer_agazade
+        type: string
     type: object
-  internal_user.ErrorResponse:
+  github_com_AgazadeAV_my-first-go-project_internal_app_user_model.SuccessResponse:
     properties:
       message:
-        example: Internal server error
+        description: A success message
+        example: Operation successful
+        type: string
+    type: object
+  github_com_AgazadeAV_my-first-go-project_internal_app_user_model.UserResponse:
+    properties:
+      birth_date:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+      phone_number:
+        type: string
+      username:
         type: string
     type: object
 host: localhost:8080
@@ -34,25 +83,7 @@ info:
   title: Users API
   version: "1.0"
 paths:
-  /users:
-    get:
-      description: Retrieve all users from the database
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/ent.User'
-            type: array
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/internal_user.ErrorResponse'
-      summary: Get all users
-      tags:
-      - users
+  /users/create-user:
     post:
       consumes:
       - application/json
@@ -63,26 +94,26 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/internal_user.CreateUserInput'
+          $ref: '#/definitions/github_com_AgazadeAV_my-first-go-project_internal_app_user_model.CreateUserInput'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.User'
+            $ref: '#/definitions/github_com_AgazadeAV_my-first-go-project_internal_app_user_model.UserResponse'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/internal_user.ErrorResponse'
+            $ref: '#/definitions/github_com_AgazadeAV_my-first-go-project_internal_app_user_errs.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/internal_user.ErrorResponse'
+            $ref: '#/definitions/github_com_AgazadeAV_my-first-go-project_internal_app_user_errs.ErrorResponse'
       summary: Create new user
       tags:
       - users
-  /users/{id}:
+  /users/delete-user/{id}:
     delete:
       description: Delete a user by UUID
       parameters:
@@ -97,18 +128,35 @@ paths:
         "200":
           description: OK
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/github_com_AgazadeAV_my-first-go-project_internal_app_user_model.SuccessResponse'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/internal_user.ErrorResponse'
+            $ref: '#/definitions/github_com_AgazadeAV_my-first-go-project_internal_app_user_errs.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/internal_user.ErrorResponse'
+            $ref: '#/definitions/github_com_AgazadeAV_my-first-go-project_internal_app_user_errs.ErrorResponse'
       summary: Delete user
+      tags:
+      - users
+  /users/get-all-users:
+    get:
+      description: Retrieve all users from the database
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_AgazadeAV_my-first-go-project_internal_app_user_model.UserResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_AgazadeAV_my-first-go-project_internal_app_user_errs.ErrorResponse'
+      summary: Get all users
       tags:
       - users
 swagger: "2.0"

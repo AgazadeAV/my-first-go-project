@@ -14,14 +14,26 @@ import (
 func init() {
 	userFields := schema.User{}.Fields()
 	_ = userFields
-	// userDescName is the schema descriptor for name field.
-	userDescName := userFields[1].Descriptor()
-	// user.NameValidator is a validator for the "name" field. It is called by the builders before save.
-	user.NameValidator = userDescName.Validators[0].(func(string) error)
-	// userDescAge is the schema descriptor for age field.
-	userDescAge := userFields[2].Descriptor()
-	// user.AgeValidator is a validator for the "age" field. It is called by the builders before save.
-	user.AgeValidator = userDescAge.Validators[0].(func(int) error)
+	// userDescFirstName is the schema descriptor for first_name field.
+	userDescFirstName := userFields[1].Descriptor()
+	// user.FirstNameValidator is a validator for the "first_name" field. It is called by the builders before save.
+	user.FirstNameValidator = userDescFirstName.Validators[0].(func(string) error)
+	// userDescLastName is the schema descriptor for last_name field.
+	userDescLastName := userFields[2].Descriptor()
+	// user.LastNameValidator is a validator for the "last_name" field. It is called by the builders before save.
+	user.LastNameValidator = userDescLastName.Validators[0].(func(string) error)
+	// userDescUsername is the schema descriptor for username field.
+	userDescUsername := userFields[3].Descriptor()
+	// user.UsernameValidator is a validator for the "username" field. It is called by the builders before save.
+	user.UsernameValidator = userDescUsername.Validators[0].(func(string) error)
+	// userDescEmail is the schema descriptor for email field.
+	userDescEmail := userFields[4].Descriptor()
+	// user.EmailValidator is a validator for the "email" field. It is called by the builders before save.
+	user.EmailValidator = userDescEmail.Validators[0].(func(string) error)
+	// userDescPhoneNumber is the schema descriptor for phone_number field.
+	userDescPhoneNumber := userFields[5].Descriptor()
+	// user.PhoneNumberValidator is a validator for the "phone_number" field. It is called by the builders before save.
+	user.PhoneNumberValidator = userDescPhoneNumber.Validators[0].(func(string) error)
 	// userDescID is the schema descriptor for id field.
 	userDescID := userFields[0].Descriptor()
 	// user.DefaultID holds the default value on creation for the id field.
