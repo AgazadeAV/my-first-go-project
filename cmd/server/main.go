@@ -7,6 +7,7 @@ package main
 // @BasePath /
 
 import (
+	_ "github.com/AgazadeAV/my-first-go-project/docs"
 	"github.com/AgazadeAV/my-first-go-project/internal/app/bootstrap"
 	"github.com/AgazadeAV/my-first-go-project/internal/app/server"
 	"github.com/AgazadeAV/my-first-go-project/pkg/database"
