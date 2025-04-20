@@ -1,9 +1,9 @@
 package util
 
 const (
-	ErrFirstNameRequired     = "First name is required."
-	ErrFirstNameEmpty        = "First name cannot be empty."
-	ErrFirstNameInvalid      = "First name error. Please use Latin letters only. Hyphen can only be in the middle, apostrophe can be in the middle or at the end."
+	ErrFirstNameRequired     = "First name is required"
+	ErrFirstNameEmpty        = "First name cannot be empty"
+	ErrFirstNameInvalid      = "First name error. Please use Latin letters only. Hyphen can only be in the middle, apostrophe can be in the middle or at the end"
 	ErrLastNameRequired      = "Last name is required"
 	ErrLastNameEmpty         = "Last name cannot be empty"
 	ErrLastNameInvalid       = "Last name error. Please use Latin letters only. Hyphen can only be in the middle, apostrophe can be in the middle or at the end"

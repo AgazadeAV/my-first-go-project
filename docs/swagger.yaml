@@ -17,7 +17,7 @@ definitions:
         example: Validation failed
         type: string
       status:
-        description: The HTTP status (as string)
+        description: The HTTP status
         example: 400 Bad Request
         type: string
       timestamp:
@@ -62,18 +62,32 @@ definitions:
   github_com_AgazadeAV_my-first-go-project_internal_app_user_model.UserResponse:
     properties:
       birth_date:
+        description: Birthdate in format YYYY-MM-DD.
+        example: "1995-05-03"
         type: string
       email:
+        description: Email address in valid format.
+        example: azer.agazade05@yandex.ru
         type: string
       first_name:
+        description: First name of the user. Must be Latin, 1-50 characters.
+        example: Azer
         type: string
       id:
+        description: ID of the user in UUID format.
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
         type: string
       last_name:
+        description: Last name of the user. Must be Latin, 1-50 characters.
+        example: Agazade
         type: string
       phone_number:
+        description: Phone number starting with +7 and 10 digits.
+        example: "+79672417678"
         type: string
       username:
+        description: Unique username (Latin letters, numbers, dash or underscore).
+        example: azer_agazade
         type: string
     type: object
 host: localhost:8080

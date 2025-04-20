@@ -46,13 +46,13 @@ func (handler *Handler) RegisterRoutes(engine *gin.Engine) {
 func (handler *Handler) createUser(ctx *gin.Context) {
 	var input model.CreateUserInput
 	if err := ctx.ShouldBindJSON(&input); err != nil {
-		ctx.Error(errs.ErrBadJSON)
+		_ = ctx.Error(errs.ErrBadJSON)
 		return
 	}
 
 	user, err := handler.service.CreateUser(context.Background(), input)
 	if err != nil {
-		ctx.Error(err)
+		_ = ctx.Error(err)
 		return
 	}
 
@@ -70,7 +70,7 @@ func (handler *Handler) createUser(ctx *gin.Context) {
 func (handler *Handler) getAllUsers(ctx *gin.Context) {
 	users, err := handler.service.GetAllUsers(context.Background())
 	if err != nil {
-		ctx.Error(err)
+		_ = ctx.Error(err)
 		return
 	}
 
@@ -91,12 +91,12 @@ func (handler *Handler) deleteUser(ctx *gin.Context) {
 	idStr := ctx.Param("id")
 	id, err := uuid.Parse(idStr)
 	if err != nil {
-		ctx.Error(errs.ErrBadUUID)
+		_ = ctx.Error(errs.ErrBadUUID)
 		return
 	}
 
 	if err := handler.service.DeleteUser(context.Background(), id); err != nil {
-		ctx.Error(err)
+		_ = ctx.Error(err)
 		return
 	}
 

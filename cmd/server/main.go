@@ -16,11 +16,17 @@ import (
 
 func main() {
 	client := database.NewEntClient()
-	defer client.Close()
+	defer func() {
+		if err := client.Close(); err != nil {
+			log.Printf("Failed to close database client: %v", err)
+		}
+	}()
 
 	userHandler := bootstrap.InitUserModule(client)
 	router := server.NewRouter(userHandler)
 
 	log.Println("🚀 Server started at http://localhost:8080")
-	router.Run(":8080")
+	if err := router.Run(":8080"); err != nil {
+		log.Fatalf("Failed to start server: %v", err)
+	}
 }

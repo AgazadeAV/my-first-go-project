@@ -8,7 +8,7 @@ type ErrorResponse struct {
 	// The time at which the error occurred
 	Timestamp time.Time `json:"timestamp" example:"2025-04-20T01:23:45Z"`
 
-	// The HTTP status (as string)
+	// The HTTP status
 	Status string `json:"status" example:"400 Bad Request"`
 
 	// A descriptive message explaining the error

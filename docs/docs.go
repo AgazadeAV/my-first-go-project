@@ -154,7 +154,7 @@ const docTemplate = `{
                     "example": "Validation failed"
                 },
                 "status": {
-                    "description": "The HTTP status (as string)",
+                    "description": "The HTTP status",
                     "type": "string",
                     "example": "400 Bad Request"
                 },
@@ -214,25 +214,39 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "birth_date": {
-                    "type": "string"
+                    "description": "Birthdate in format YYYY-MM-DD.",
+                    "type": "string",
+                    "example": "1995-05-03"
                 },
                 "email": {
-                    "type": "string"
+                    "description": "Email address in valid format.",
+                    "type": "string",
+                    "example": "azer.agazade05@yandex.ru"
                 },
                 "first_name": {
-                    "type": "string"
+                    "description": "First name of the user. Must be Latin, 1-50 characters.",
+                    "type": "string",
+                    "example": "Azer"
                 },
                 "id": {
-                    "type": "string"
+                    "description": "ID of the user in UUID format.",
+                    "type": "string",
+                    "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
                 },
                 "last_name": {
-                    "type": "string"
+                    "description": "Last name of the user. Must be Latin, 1-50 characters.",
+                    "type": "string",
+                    "example": "Agazade"
                 },
                 "phone_number": {
-                    "type": "string"
+                    "description": "Phone number starting with +7 and 10 digits.",
+                    "type": "string",
+                    "example": "+79672417678"
                 },
                 "username": {
-                    "type": "string"
+                    "description": "Unique username (Latin letters, numbers, dash or underscore).",
+                    "type": "string",
+                    "example": "azer_agazade"
                 }
             }
         }
