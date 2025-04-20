@@ -1,5 +1,11 @@
 package main
 
+// @title Users API
+// @version 1.0
+// @description This is a simple REST API with Gin and Ent
+// @host localhost:8080
+// @BasePath /
+
 import (
 	"github.com/AgazadeAV/my-first-go-project/internal/app/bootstrap"
 	"github.com/AgazadeAV/my-first-go-project/internal/app/server"
