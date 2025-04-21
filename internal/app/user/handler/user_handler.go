@@ -26,12 +26,12 @@ func NewHandler(service *service.Service) *Handler {
 	return &Handler{service: service}
 }
 
-func (handler *Handler) RegisterRoutes(engine *gin.Engine) {
+func (h *Handler) RegisterRoutes(engine *gin.Engine) {
 	users := engine.Group(UserBasePath)
 	{
-		users.POST(CreateUserRoute, handler.createUser)
-		users.GET(GetAllUsersRoute, handler.getAllUsers)
-		users.DELETE(DeleteUserRoute, handler.deleteUser)
+		users.POST(CreateUserRoute, h.createUser)
+		users.GET(GetAllUsersRoute, h.getAllUsers)
+		users.DELETE(DeleteUserRoute, h.deleteUser)
 	}
 }
 
@@ -46,14 +46,14 @@ func (handler *Handler) RegisterRoutes(engine *gin.Engine) {
 // @Failure 400 {object} errs.ErrorResponse
 // @Failure 500 {object} errs.ErrorResponse
 // @Router /users/create-user [post]
-func (handler *Handler) createUser(ctx *gin.Context) {
+func (h *Handler) createUser(ctx *gin.Context) {
 	var input model.CreateUserInput
 	if err := ctx.ShouldBindJSON(&input); err != nil {
 		_ = ctx.Error(errs.ErrBadJSON)
 		return
 	}
 
-	response, err := handler.service.CreateUser(context.Background(), input)
+	response, err := h.service.CreateUser(context.Background(), input)
 	if err != nil {
 		_ = ctx.Error(err)
 		return
@@ -70,8 +70,8 @@ func (handler *Handler) createUser(ctx *gin.Context) {
 // @Success 200 {array} model.UserResponse
 // @Failure 500 {object} errs.ErrorResponse
 // @Router /users/get-all-users [get]
-func (handler *Handler) getAllUsers(ctx *gin.Context) {
-	response, err := handler.service.GetAllUsers(context.Background())
+func (h *Handler) getAllUsers(ctx *gin.Context) {
+	response, err := h.service.GetAllUsers(context.Background())
 	if err != nil {
 		_ = ctx.Error(err)
 		return
@@ -90,7 +90,7 @@ func (handler *Handler) getAllUsers(ctx *gin.Context) {
 // @Failure 400 {object} errs.ErrorResponse
 // @Failure 404 {object} errs.ErrorResponse
 // @Router /users/delete-user/{id} [delete]
-func (handler *Handler) deleteUser(ctx *gin.Context) {
+func (h *Handler) deleteUser(ctx *gin.Context) {
 	idStr := ctx.Param("id")
 	id, err := uuid.Parse(idStr)
 	if err != nil {
@@ -98,7 +98,7 @@ func (handler *Handler) deleteUser(ctx *gin.Context) {
 		return
 	}
 
-	if err := handler.service.DeleteUser(context.Background(), id); err != nil {
+	if err := h.service.DeleteUser(context.Background(), id); err != nil {
 		_ = ctx.Error(err)
 		return
 	}
