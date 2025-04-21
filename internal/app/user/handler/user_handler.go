@@ -13,9 +13,9 @@ import (
 const (
 	UserBasePath = "/users"
 
-	CreateUserRoute  = UserBasePath + "/create-user"
-	GetAllUsersRoute = UserBasePath + "/get-all-users"
-	DeleteUserRoute  = UserBasePath + "/delete-user/:id"
+	CreateUserRoute  = "/create-user"
+	GetAllUsersRoute = "/get-all-users"
+	DeleteUserRoute  = "/delete-user/:id"
 )
 
 type Handler struct {
@@ -27,9 +27,12 @@ func NewHandler(service *service.Service) *Handler {
 }
 
 func (handler *Handler) RegisterRoutes(engine *gin.Engine) {
-	engine.POST(CreateUserRoute, handler.createUser)
-	engine.GET(GetAllUsersRoute, handler.getAllUsers)
-	engine.DELETE(DeleteUserRoute, handler.deleteUser)
+	users := engine.Group(UserBasePath)
+	{
+		users.POST(CreateUserRoute, handler.createUser)
+		users.GET(GetAllUsersRoute, handler.getAllUsers)
+		users.DELETE(DeleteUserRoute, handler.deleteUser)
+	}
 }
 
 // CreateUser godoc
