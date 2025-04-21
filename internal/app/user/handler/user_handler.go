@@ -53,13 +53,13 @@ func (handler *Handler) createUser(ctx *gin.Context) {
 		return
 	}
 
-	user, err := handler.service.CreateUser(context.Background(), input)
+	response, err := handler.service.CreateUser(context.Background(), input)
 	if err != nil {
 		_ = ctx.Error(err)
 		return
 	}
 
-	ctx.JSON(http.StatusOK, user)
+	ctx.JSON(http.StatusOK, response)
 }
 
 // GetAllUsers godoc
@@ -71,13 +71,13 @@ func (handler *Handler) createUser(ctx *gin.Context) {
 // @Failure 500 {object} errs.ErrorResponse
 // @Router /users/get-all-users [get]
 func (handler *Handler) getAllUsers(ctx *gin.Context) {
-	users, err := handler.service.GetAllUsers(context.Background())
+	response, err := handler.service.GetAllUsers(context.Background())
 	if err != nil {
 		_ = ctx.Error(err)
 		return
 	}
 
-	ctx.JSON(http.StatusOK, users)
+	ctx.JSON(http.StatusOK, response)
 }
 
 // DeleteUser godoc
@@ -103,5 +103,7 @@ func (handler *Handler) deleteUser(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, model.SuccessResponse{Message: "User deleted"})
+	response := model.SuccessResponse{Message: "User deleted"}
+
+	ctx.JSON(http.StatusOK, response)
 }
